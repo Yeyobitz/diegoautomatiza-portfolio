@@ -1,6 +1,7 @@
 """Tests del generador de cotizaciones (demo 5)."""
 
 import re
+import shutil
 from datetime import date
 from pathlib import Path
 
@@ -153,6 +154,10 @@ def test_precio_negativo_rechazado(tmp_path):
 
 # ---------------------------------------------------------------- documento
 
+SOFFICE = shutil.which("soffice")
+
+
+@pytest.mark.skipif(SOFFICE is None, reason="LibreOffice (soffice) no está disponible")
 def test_pdf_existe_y_no_vacio(tmp_path):
     ruta = _items_csv(tmp_path, ITEMS_OK)
     resultado = cotizador.main(["--items", str(ruta), "--salida", str(tmp_path),
