@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiegoAutomatiza — Automatización de procesos con Python, tests y CI</title>
+  <meta name="description" content="Automatizo procesos manuales de tu pyme con Python: conciliación de datos, monitoreo de precios, certificados masivos y reportes operativos. Entregables con tests y CI, muestra gratis antes de pagar.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== Barra superior ===== -->
+  <header class="topbar">
+    <div class="contenedor topbar-inner">
+      <span class="marca">Diego<span class="marca-acent">Automatiza</span></span>
+      <nav class="topnav">
+        <a href="#demos">Demos</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#como-trabajo">Cómo trabajo</a>
+        <a href="#contacto" class="btn btn-chico">Contacto</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section class="hero">
+    <div class="contenedor">
+      <h1>Automatizo tus procesos con Python — entregables con tests y CI, no scripts sueltos</h1>
+      <p class="hero-sub">
+        Planillas que se cruzan solas, monitoreos que corren cada día, reportes que llegan listos para leer.
+        Cada entrega viene probada y documentada: si cambia algo mañana, sigue funcionando.
+      </p>
+      <div class="hero-acciones">
+        <a href="#servicios" class="btn btn-primario">Ver servicios y precios</a>
+        <a href="#demos" class="btn btn-borde">Ver demos funcionando</a>
+      </div>
+      <ul class="hero-puntos">
+        <li>Tests incluidos en cada entrega</li>
+        <li>Integración continua (CI) en GitHub</li>
+        <li>Muestra gratis antes de pagar</li>
+        <li>Correcciones incluidas, 24–48 h</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== Demos ===== -->
+  <section class="seccion" id="demos">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Demos reales, código público</h2>
+      <p class="intro-seccion">
+        Cuatro automatizaciones de ejemplo que puedes revisar completas en GitHub:
+        código, tests y ejecución continua. Ninguna usa datos de clientes reales.
+      </p>
+
+      <div class="tarjetas">
+
+        <article class="tarjeta">
+          <div class="tarjeta-media">
+            <img src="../demo1-consolidador/capturas/antes-despues.gif" alt="Antes y después del consolidador de ventas: de planillas dispersas a un dashboard consolidado">
+            <img src="../demo1-consolidador/capturas/dashboard.png" alt="Dashboard de ventas consolidado con KPIs generados automáticamente">
+          </div>
+          <div class="tarjeta-cuerpo">
+            <h3>Consolidador de ventas</h3>
+            <p class="dolor">Vendes en varios canales y cada uno te entrega una planilla distinta: nunca sabes cuánto vendiste en realidad.</p>
+            <p class="tarjeta-detalle">Cruza todas las planillas, normaliza nombres y montos, y entrega un dashboard consolidado con KPIs y PDF.</p>
+            <a class="enlace-demo" href="https://github.com/Yeyobitz/diegoautomatiza-portfolio/tree/main/demo1-consolidador" target="_blank" rel="noopener">Ver demo en GitHub →</a>
+          </div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-media">
+            <img src="../demo2-scraper/capturas/captura-03.png" alt="Scraper de precios: captura de resultados de monitoreo de precios de competidores">
+          </div>
+          <div class="tarjeta-cuerpo">
+            <h3>Scraper / monitoreo de precios</h3>
+            <p class="dolor">Revisar a mano los precios de tus competidores todos los días no escala, y a veces llegas tarde a reaccionar.</p>
+            <p class="tarjeta-detalle">Extrae precios y disponibilidad de los sitios que indicas, guarda el historial y deja los cambios del día listos para leer.</p>
+            <a class="enlace-demo" href="https://github.com/Yeyobitz/diegoautomatiza-portfolio/tree/main/demo2-scraper" target="_blank" rel="noopener">Ver demo en GitHub →</a>
+          </div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-media">
+            <img src="../demo3-plantillas/capturas/captura-certificado-participacion.png" alt="Certificado de participación generado automáticamente desde una lista en Excel">
+          </div>
+          <div class="tarjeta-cuerpo">
+            <h3>Certificados masivos</h3>
+            <p class="dolor">Escribir a mano 200 certificados para tu evento es un día entero perdido y siempre se cuela algún nombre mal.</p>
+            <p class="tarjeta-detalle">Genera certificados, distinciones y diplomas personalizados desde una lista Excel, listos para imprimir o enviar.</p>
+            <a class="enlace-demo" href="https://github.com/Yeyobitz/diegoautomatiza-portfolio/tree/main/demo3-plantillas" target="_blank" rel="noopener">Ver demo en GitHub →</a>
+          </div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="tarjeta-media">
+            <img src="../demo4-reporte-faena/capturas/reporte_faena_2026-11-23-1.png" alt="Reporte operativo de faena generado automáticamente con producción y personal">
+          </div>
+          <div class="tarjeta-cuerpo">
+            <h3>Reportes operativos para faenas</h3>
+            <p class="dolor">El reporte diario de producción se arma a mano cada mañana y nunca llega a la hora, ni siempre igual.</p>
+            <p class="tarjeta-detalle">Reportes operativos (producción, personal, indicadores) generados en segundos con formato consistente, día tras día.</p>
+            <a class="enlace-demo" href="https://github.com/Yeyobitz/diegoautomatiza-portfolio/tree/main/demo4-reporte-faena" target="_blank" rel="noopener">Ver demo en GitHub →</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Servicios ===== -->
+  <section class="seccion seccion-altos" id="servicios">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Servicios y precios indicativos</h2>
+      <p class="intro-seccion">
+        Los valores finales dependen del alcance de tu caso; esta es una referencia honesta de partida.
+      </p>
+
+      <div class="tarjetas">
+
+        <article class="tarjeta servicio">
+          <h3>Conciliación de datos</h3>
+          <p class="precio">desde USD 60</p>
+          <p class="tarjeta-detalle">Cruce y limpieza de planillas (ventas, stock, bancos, sistemas distintos). Te entrego el resultado listo más la herramienta para repetirlo cuando quieras.</p>
+          <ul class="lista-check">
+            <li>Entrega única, repetible</li>
+            <li>Validaciones y tests incluidos</li>
+          </ul>
+        </article>
+
+        <article class="tarjeta servicio">
+          <h3>Monitor de precios / reportes</h3>
+          <p class="precio">USD 50–150 / mes</p>
+          <p class="tarjeta-detalle">Monitoreo automático de precios de competidores u otros datos web, con reporte periódico en tu correo. Funciona solo, día tras día, y te aviso si algo se rompe.</p>
+          <ul class="lista-check">
+            <li>Suscripción mensual</li>
+            <li>Correcciones y ajustes incluidos</li>
+          </ul>
+        </article>
+
+        <article class="tarjeta servicio">
+          <h3>Certificados masivos</h3>
+          <p class="precio">cotización rápida</p>
+          <p class="tarjeta-detalle">Certificados, diplomas y distinciones en lote desde tu lista Excel, con tu diseño institucional. Ideal para eventos, cursos y gremios.</p>
+          <ul class="lista-check">
+            <li>Por evento o por lote</li>
+            <li>Muestra gratis con 5 nombres</li>
+          </ul>
+        </article>
+
+        <article class="tarjeta servicio">
+          <h3>Reportes operativos para faenas</h3>
+          <p class="precio">cotización rápida</p>
+          <p class="tarjeta-detalle">Reportes diarios de producción, personal e indicadores con formato consistente, listos para imprimir o enviar a jefatura.</p>
+          <ul class="lista-check">
+            <li>Entrega en horario fijo</li>
+            <li>Adaptado a tu formato actual</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Cómo trabajo ===== -->
+  <section class="seccion" id="como-trabajo">
+    <div class="contenedor">
+      <h2 class="titulo-seccion">Cómo trabajo</h2>
+      <p class="intro-seccion">
+        Sin sorpresas: primero ves el resultado, después pagas.
+      </p>
+
+      <ol class="pasos">
+        <li>
+          <h3>Cuéntame tu proceso</h3>
+          <p>Me describes qué haces a mano hoy (una planilla, un reporte, una página web) y me pasas un ejemplo sin datos sensibles.</p>
+        </li>
+        <li>
+          <h3>Recibes una muestra gratis</h3>
+          <p>Te entrego una muestra del resultado con tus propios datos de ejemplo. La ves antes de pagar; si no te convence, no sigue nada.</p>
+        </li>
+        <li>
+          <h3>Acordamos precio y entrega</h3>
+          <p>Precio claro por escrito y fecha de entrega, normalmente dentro de 24–48 h para trabajos puntuales.</p>
+        </li>
+        <li>
+          <h3>Entrega con tests y correcciones</h3>
+          <p>Recibes la herramienta funcionando, con pruebas incluidas. Las correcciones dentro del alcance acordado van incluidas, sin costo extra.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== Contacto ===== -->
+  <section class="seccion contacto" id="contacto">
+    <div class="contenedor contacto-inner">
+      <h2>Conversemos sobre tu proceso</h2>
+      <p>Escríbeme con lo que hoy haces a mano. En menos de 24 h te digo qué se puede automatizar y te propongo una muestra gratis.</p>
+      <div class="contacto-enlaces">
+        <a class="btn btn-primario" href="mailto:d.de.diego.dev@gmail.com">d.de.diego.dev@gmail.com</a>
+        <a class="btn btn-borde" href="https://github.com/Yeyobitz/diegoautomatiza-portfolio" target="_blank" rel="noopener">github.com/Yeyobitz/diegoautomatiza-portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Pie ===== -->
+  <footer class="pie">
+    <div class="contenedor pie-inner">
+      <span>Diego A. Quiñones · DiegoAutomatiza · Chile</span>
+      <span><a href="mailto:d.de.diego.dev@gmail.com">d.de.diego.dev@gmail.com</a></span>
+    </div>
+  </footer>
+
+</body>
+</html>
