@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        demo: [demo1-consolidador, demo2-scraper, demo3-plantillas, demo4-reporte-faena]
+        demo: [demo1-consolidador, demo2-scraper, demo3-plantillas, demo4-reporte-faena, demo5-cotizador, demo6-asistencia]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

@@ -1,0 +1,4 @@
+turno,hora_entrada_ideal,hora_salida_ideal,tolerancia_min
+Mañana,06:00,14:00,5
+Día,08:00,17:00,10
+Tarde,14:00,22:00,10
