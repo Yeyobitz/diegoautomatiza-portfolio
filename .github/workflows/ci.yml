@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        demo: [demo1-consolidador, demo2-scraper, demo3-plantillas, demo4-reporte-faena]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Instalar dependencias del demo ${{ matrix.demo }}
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f "${{ matrix.demo }}/requirements.txt" ]; then
+            pip install -r "${{ matrix.demo }}/requirements.txt"
+          fi
+          pip install pytest
+      - name: Ejecutar tests de ${{ matrix.demo }}
+        run: pytest "${{ matrix.demo }}" -q

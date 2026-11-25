@@ -1,0 +1,14 @@
+# Entorno virtual
+.venv/
+
+# Cachés de Python
+__pycache__/
+*.pyc
+
+# Temporales del sistema
+.DS_Store
+Thumbs.db
+*~
+
+# Intermedios: los PDF generados por los scripts se pueden regenerar,
+# pero se dejan en el repo como evidencia de salida (no se ignoran).
