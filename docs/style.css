@@ -34,12 +34,12 @@
   --tinta: #14304A;
   --azul: #1F4E79;
   --bruma: #3F566B;
-  --bruma-azul: #BFD2E2;
-  --bruma-tinta: #9FB4C7;
+  --bruma-azul: #D3E0EE;
+  --bruma-tinta: #C2D2E1;
   --ambar: #A05208;
   --ambar-vivo: #E89518;
-  --linea: rgb(20 48 74 / 0.16);
-  --linea-azul: rgb(244 239 228 / 0.24);
+  --linea: rgb(20 48 74 / 0.28);
+  --linea-azul: rgb(244 239 228 / 0.5);
 
   /* Anillo de foco por sección; los fondos son estáticos por sección */
   --campo-foco: var(--ambar);
@@ -74,7 +74,6 @@
 html {
   text-size-adjust: none;
   -webkit-text-size-adjust: none;
-  scroll-behavior: smooth;
   background: var(--papel);
   color: var(--tinta);
 }
@@ -201,20 +200,30 @@ html:not(.js) #loader,
   text-transform: uppercase;
   letter-spacing: 0.01em;
   padding: 0.55rem 0;
-  /* Subrayado que barre, igual que la nav */
-  background: linear-gradient(currentColor 0 0) left bottom / 0% 2px no-repeat;
-  transition: background-size 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+}
+/* Subrayado que barre (pseudo: sin imagen de fondo, axe puede medir el contraste) */
+.marca::after,
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .marca-icono { width: 22px; height: 22px; flex: none; }
 .marca-acento { color: var(--ambar); }
 .nav { display: flex; align-items: center; gap: clamp(0.5rem, 2vw, 1.5rem); }
 .nav-link {
+  position: relative;
   padding: 0.7rem 0.35rem;
   font-weight: 600;
   font-size: var(--t-s);
-  /* Subrayado que barre (se dibuja de izquierda a derecha) */
-  background: linear-gradient(currentColor 0 0) left bottom / 0% 2px no-repeat;
-  transition: background-size 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 /* ---------- Botones (relleno que inunda) ---------- */
@@ -409,11 +418,12 @@ section[id] { scroll-margin-top: 5rem; }
 .obra-media {
   grid-column: 1 / span 7;
   position: relative;
+  min-width: 0;
   overflow: clip;
   border: 1px solid var(--linea);
   background: var(--panel);
 }
-/* Brida de pieza sobre cada captura: crece al pasar el puntero */
+/* Brida de pieza sobre cada captura: cruza todo el card (offset intencional descartado) */
 .obra-media::after {
   content: "";
   position: absolute;
@@ -422,9 +432,7 @@ section[id] { scroll-margin-top: 5rem; }
   width: 100%;
   height: 4px;
   background: var(--ambar-vivo);
-  transform: scaleX(0.32);
-  transform-origin: left;
-  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+  z-index: 2;
 }
 .obra-media img {
   width: 100%;
@@ -458,19 +466,37 @@ section[id] { scroll-margin-top: 5rem; }
   margin-bottom: 0.8rem;
 }
 .obra-detalle { margin-bottom: 0.8rem; }
+/* Links de demo: bloque con texto que envuelve; la flecha va anclada a la
+   ultima palabra (obra-cola) para no quedar huerfana en su propia linea. */
 .obra-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
+  position: relative;
+  display: inline-block;
   padding: 0.8rem 0;
   min-height: 44px;
   font-weight: 600;
   color: var(--azul);
 }
+/* Subrayado que barre (elemento real: axe puede medir el contraste sin revisión) */
+.obra-subrayado {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.7rem;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.165, 0.84, 0.44, 1);
+  pointer-events: none;
+}
+.obra-cola { white-space: nowrap; }
 .obra-flecha {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
   transition: translate 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
+.obra-flecha svg { display: block; }
 
 /* ---------- Servicios: campo azul, libro mayor ---------- */
 .servicios {
@@ -537,14 +563,14 @@ section[id] { scroll-margin-top: 5rem; }
 
 /* ---------- Proceso: montaje ---------- */
 .proceso { padding-block: calc(var(--u) * 10); }
-.pasos {
+.pasos-montaje {
   position: relative;
   margin-top: calc(var(--u) * 4);
   padding-left: clamp(3.5rem, 8vw, 7rem);
 }
-/* La estructura sube: barra vertical que crece con el scroll */
-.pasos::before {
-  content: "";
+.pasos { position: relative; }
+/* La estructura sube: barra vertical (elemento real, no pseudo) */
+.pasos-riel {
   position: absolute;
   left: clamp(1.1rem, 2.4vw, 2rem);
   top: 0.5rem;
@@ -620,13 +646,25 @@ section[id] { scroll-margin-top: 5rem; }
   letter-spacing: -0.01em;
   overflow-wrap: anywhere;
   padding: 0.2em 0;
-  /* Subrayado de pie: banda ámbar que barre bajo el texto */
-  background: linear-gradient(var(--ambar-vivo) 0 0) left bottom / 100% 2px no-repeat;
-  transition: background-size 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+  position: relative;
+}
+/* Subrayado de pie: banda ámbar bajo el texto, más gruesa al pasar el puntero */
+.email-gigante::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.08em;
+  height: 2px;
+  background: var(--ambar-vivo);
+  transform: scaleY(1);
+  transform-origin: bottom;
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .contacto-github {
   color: var(--bruma-tinta);
   padding: 0.8rem 0;
+  overflow-wrap: anywhere;
 }
 .contacto .obra-link:focus-visible { outline-color: var(--ambar-vivo); }
 
@@ -635,7 +673,7 @@ section[id] { scroll-margin-top: 5rem; }
   background: var(--tinta);
   --campo-foco: var(--ambar-vivo);
   color: var(--bruma-tinta);
-  border-top: 1px solid rgb(244 239 228 / 0.14);
+  border-top: 1px solid rgb(244 239 228 / 0.35);
   padding-block: calc(var(--u) * 3);
 }
 .pie-inner {
@@ -660,15 +698,16 @@ section[id] { scroll-margin-top: 5rem; }
 
 /* ---------- Interacciones (solo puntero fino) ---------- */
 @media (hover: hover) {
-  .nav-link:hover,
-  .nav-link:focus-visible,
-  .marca:hover,
-  .marca:focus-visible { background-size: 100% 2px; }
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after,
+  .marca:hover::after,
+  .marca:focus-visible::after,
+  .obra-link:hover .obra-subrayado,
+  .obra-link:focus-visible .obra-subrayado { transform: scaleX(1); }
   .obra:hover .obra-media img { transform: scale(1.035); }
-  .obra:hover .obra-media::after { transform: scaleX(1); }
   .obra-link:hover .obra-flecha { translate: 6px 0; }
-  .email-gigante:hover,
-  .email-gigante:focus-visible { background-size: 100% 0.12em; }
+  .email-gigante:hover::after,
+  .email-gigante:focus-visible::after { transform: scaleY(3); }
   .pie-volver:hover .obra-flecha { translate: 0 -5px; }
 }
 .obra-link:focus-visible .obra-flecha,
@@ -676,6 +715,9 @@ section[id] { scroll-margin-top: 5rem; }
 
 /* Enlaces sueltos dentro de texto (si aparecen): subrayado en reposo */
 .texto-link { text-decoration: underline; text-underline-offset: 0.18em; }
+
+/* Pista de deslizamiento de previews: solo telefono */
+.pista-scroll { display: none; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1023px) {
@@ -689,19 +731,79 @@ section[id] { scroll-margin-top: 5rem; }
 }
 @media (max-width: 767px) {
   .cabecera-inner { flex-wrap: wrap; padding-block: 0.4rem; min-height: 3.5rem; }
-  .nav { width: 100%; justify-content: flex-start; gap: 0.25rem; overflow-x: auto; }
-  .nav-link { padding: 0.7rem 0.6rem; white-space: nowrap; }
+  /* Nav movil: la fila scrollea y el ultimo link no pega contra el borde */
+  .nav { width: 100%; justify-content: flex-start; gap: 0.25rem; overflow-x: auto; padding-inline: 0.25rem 1.25rem; scrollbar-width: none; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-link { padding: 0.8rem 0.6rem; white-space: nowrap; }
   .hero { padding-block: calc(var(--u) * 4); }
   .hero-acciones .btn { flex: 1 1 100%; justify-content: center; }
   .paso { grid-template-columns: 1fr; gap: 0.4rem; }
   .email-gigante { font-size: clamp(1.35rem, 0.4rem + 4.4vw, 2.2rem); }
   .pie-inner { flex-direction: column; align-items: flex-start; }
   .pie-volver { margin-left: 0; }
+
+  /* Previews en telefono: extracto anclado a la izquierda, el resto del
+     documento se lee deslizando (scroll horizontal real, no un cultivo ciego) */
+  .obra-ventana {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    overscroll-behavior-x: contain;
+    padding-right: 0.75rem;
+  }
+  .obra-ventana::-webkit-scrollbar { display: none; }
+  .obra-ventana img { aspect-ratio: auto; height: clamp(13rem, 64vw, 17rem); width: auto; max-width: none; }
+  /* En telefono la captura no escala al hover: el marco ya scrollea */
+  .obra:hover .obra-media img { transform: none; }
+  /* Afilo del borde derecho: se ve que el documento sigue (fijo sobre la figura) */
+  .obra-media::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    bottom: 0;
+    right: 0;
+    width: 2.75rem;
+    background: linear-gradient(to right, rgb(255 255 255 / 0), rgb(255 255 255 / 0.9));
+    pointer-events: none;
+    z-index: 1;
+  }
+  .pista-scroll {
+    position: sticky;
+    right: 0.6rem;
+    bottom: 0.6rem;
+    z-index: 3;
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.65rem;
+    margin-left: -8.5rem;
+    background: rgb(20 48 74 / 0.88);
+    color: var(--papel);
+    font-family: var(--f-mono);
+    font-size: var(--t-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    pointer-events: none;
+    flex: none;
+  }
+  .pista-scroll .obra-flecha { margin-left: 0; }
+  /* La pista se retira al deslizar (sin listeners: timeline de scroll) */
+  @supports (animation-timeline: scroll()) {
+    .pista-scroll { animation: pista-retira linear both; animation-timeline: scroll(nearest inline); }
+  }
+}
+@keyframes pista-retira {
+  0%, 6% { opacity: 1; }
+  16%, 100% { opacity: 0; }
 }
 
 /* ---------- Reduced motion: contenido completo, estados visibles ---------- */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
@@ -716,8 +818,7 @@ section[id] { scroll-margin-top: 5rem; }
   .btn-nav:hover, .btn-nav:focus-visible { background: var(--tinta); }
   .servicios .btn-primario:hover,
   .servicios .btn-primario:focus-visible { background: var(--papel); color: var(--tinta); border-color: var(--papel); }
-  .nav-link:hover { background-size: 100% 2px; }
-  .email-gigante:hover { background-size: 100% 0.12em; }
+  .nav-link:hover::after, .marca:hover::after, .obra-link:hover .obra-subrayado { transform: scaleX(1); }
+  .email-gigante:hover::after { transform: scaleY(3); }
   .obra-media img { transform: none !important; }
-  .obra:hover .obra-media::after { transform: scaleX(1); }
 }

@@ -18,8 +18,19 @@ if (!window.gsap) {
   const ScrollTrigger = window.ScrollTrigger;
   gsap.registerPlugin(ScrollTrigger);
 
-  /* ---------- Scroll: nativo suave (anchors + focus), sin librería que pelee
-     con los scrolls programáticos del navegador ---------- */
+  /* ---------- Scroll: las anclas navegan con scroll suave por JS; el scroll
+     programático del navegador (foco, find-in-page, herramientas de QA) queda
+     instantáneo, igual que bajo reduced motion ---------- */
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    const destino = document.querySelector(a.getAttribute('href'));
+    if (!destino) return;
+    e.preventDefault();
+    destino.scrollIntoView({ behavior: tieneMotion ? 'smooth' : 'auto', block: 'start' });
+    if (destino.hasAttribute('tabindex')) destino.focus({ preventScroll: true });
+    history.replaceState(null, '', a.getAttribute('href'));
+  });
 
   /* ---------- Reveal: los bloques suben y encajan (opacidad, no visibility,
      para que los links sigan siendo enfocables; el foco los revela al instante) ---------- */
@@ -33,6 +44,7 @@ if (!window.gsap) {
         duration: 1.15,
         ease: 'expo.out',
         scrollTrigger: { trigger: el, start: 'top 92%', once: true },
+        onComplete: () => gsap.set(el, { clearProps: 'transform,translate,rotate,scale' }),
       });
       reveals.set(el, tween);
     });
@@ -61,7 +73,7 @@ if (!window.gsap) {
       root.hidden = true;
       return;
     }
-    await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 1000))]);
+    await Promise.race([document.fonts.ready, new Promise((r) => setTimeout(r, 150))]);
     const count = root.querySelector('[data-loader-count]');
     const bar = root.querySelector('[data-loader-bar]');
     const arranque = buildIntro(); // pausado: se arma mientras la cortina sube
@@ -71,7 +83,7 @@ if (!window.gsap) {
     const o = { v: 0 };
     await gsap.to(o, {
       v: 100,
-      duration: cargaMuyLenta ? 0.15 : cargaLenta ? 0.35 : 0.55,
+      duration: cargaMuyLenta ? 0.08 : cargaLenta ? 0.14 : 0.2,
       ease: 'power2.inOut',
       onUpdate: () => {
         if (count) count.textContent = String(Math.round(o.v)).padStart(3, '0');
@@ -79,11 +91,18 @@ if (!window.gsap) {
       },
     });
     // Salida: la cortina sube como una plataforma y entrega al hero que se arma.
+    // Presupuesto del loader: <=1.2 s desde que arranca (decisión de la pasada 3).
     arranque.play();
-    await gsap.timeline()
-      .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -130, duration: cargaMuyLenta ? 0.3 : cargaLenta ? 0.4 : 0.5, ease: 'power2.in', stagger: 0.04 })
-      .to(root, { clipPath: 'inset(0% 0% 100% 0%)', duration: cargaMuyLenta ? 0.4 : cargaLenta ? 0.55 : 0.75, ease: 'expo.inOut' }, '-=0.12');
+    await gsap.timeline({ onComplete: limpiarIntro })
+      .to(root.querySelectorAll('[data-loader-out]'), { yPercent: -130, duration: cargaMuyLenta ? 0.14 : cargaLenta ? 0.18 : 0.22, ease: 'power2.in', stagger: 0.02 })
+      .to(root, { clipPath: 'inset(0% 0% 100% 0%)', duration: cargaMuyLenta ? 0.22 : cargaLenta ? 0.28 : 0.3, ease: 'expo.inOut' }, '-=0.1');
     root.hidden = true;
+  }
+
+  // Al terminar la intro se retiran los transform inline: el DOM queda limpio
+  // y axe puede verificar el contraste de los titulares sin revisión manual.
+  function limpiarIntro() {
+    gsap.set('.plataforma-texto, .traba, .rail, .hero-meta, .hero-sub, .hero-acciones, .hero-tags', { clearProps: 'transform,translate,rotate,scale' });
   }
 
   /* ---------- Intro: el titular se monta pieza a pieza (firma) ---------- */
